@@ -70,11 +70,11 @@
         <a href="addwhitelist.php">
           <i class="fa fa-user-secret"></i> <span>AÑADIR WHITELIST</span>
         </a>
-      </li>'
+      </li>
       
       
 		';
-	}
+}
 		?>
 
 		
