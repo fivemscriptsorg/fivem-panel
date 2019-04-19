@@ -6,7 +6,7 @@
 
 function conexion_bd() {
     
-    
+    static $test;
     static $conexion;
        
     /*Comprovamos si la conexi�n ya esta abierta 
