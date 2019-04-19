@@ -63,6 +63,20 @@
 	}
 		?>
 
+
+<?php if ($_SESSION['lvRANGO'] >= 6){
+      	echo '
+        <li>
+        <a href="addwhitelist.php">
+          <i class="fa fa-user-secret"></i> <span>AÑADIR WHITELIST</span>
+        </a>
+      </li>'
+      
+      
+		';
+	}
+		?>
+
 		
 		 <?php if ($_SESSION['lvRANGO'] >= 3 && $_SESSION["lvRANGO"] != 8){
       	echo '<li><a href="ipbuscador-admins.php"><i class="fa fa-circle-o"></i> <span>Buscador de IP</span></a></li>
