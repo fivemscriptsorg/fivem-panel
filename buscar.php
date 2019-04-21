@@ -83,9 +83,9 @@ if( $_SESSION['lvRANGO'] < 1){
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3><?php  echo count(seleccionar_BD("SELECT * FROM users"));  ?></h3>
+              <h3><?php  echo count(seleccionar_BD("SELECT 'isDonator' FROM users"));  ?></h3>
 
-              <p>Usuarios Registradossss</p>
+              <p>Usuarios Registrados</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-stalker"></i>
@@ -98,7 +98,7 @@ if( $_SESSION['lvRANGO'] < 1){
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?php  echo count(seleccionar_BD("SELECT * FROM users WHERE isDonator > 0"));  ?></h3>
+              <h3><?php  echo count(seleccionar_BD("SELECT 'isDonator' FROM users WHERE isDonator > 0"));  ?></h3>
 
               <p>Usuarios VIP</p>
             </div>
@@ -113,7 +113,7 @@ if( $_SESSION['lvRANGO'] < 1){
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3><?php  echo count(seleccionar_BD("SELECT * FROM users WHERE job = 'police'"));  ?></h3>
+              <h3><?php  echo count(seleccionar_BD("SELECT 'isDonator' FROM users WHERE job = 'police'"));  ?></h3>
 
               <p>Usuarios GC</p>
             </div>
@@ -128,7 +128,7 @@ if( $_SESSION['lvRANGO'] < 1){
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3><?php  echo count(seleccionar_BD("SELECT * FROM users WHERE job = 'ambulance'"));  ?></h3>
+              <h3><?php  echo count(seleccionar_BD("SELECT 'isDonator' FROM users WHERE job = 'ambulance'"));  ?></h3>
 
               <p>Usuarios EMS</p>
             </div>
