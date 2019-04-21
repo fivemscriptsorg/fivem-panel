@@ -49,15 +49,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         
          
 	$baneado = false;
-  
-	/*
-	$resultados = seleccionar_BD("SELECT * FROM users WHERE license = '$licencia'");
-	
-	$checkbant = seleccionar_BD("SELECT * FROM bans WHERE id = '$licencia'");
-	
-	$checkbanp = seleccionar_BD("SELECT * FROM bansperm WHERE id = '$licencia'");
-	*/
+
 	$arr = [];
+  $checkbanp = [];
+  $checkbant = [];
 	$conexion = conexion_bd();
 	$stmt = $conexion->prepare("SELECT * FROM users WHERE license = ?");
 	$stmt->bind_param("s", $licencia);
@@ -67,24 +62,30 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 	while($row = $resultados->fetch_assoc()) {
 	  $arr[] = $row;
 	}
-	if(!$arr) exit('No rows');
-	$stmt->close();
+	if(!$arr) exit('No existe este usuario');
+  $stmt->close();
+
 	
-	$conexion = conexion_bd();
+  //bans temporales
 	$stmt = $conexion->prepare("SELECT * FROM bans WHERE id = ?");
 	$stmt->bind_param("s", $licencia);
 	$stmt->execute();
-	$checkbant = $stmt->get_result();
+	$banssqlt = $stmt->get_result();
+	while($row = $banssqlt->fetch_assoc()) {
+	  $checkbant[] = $row;
+  }
 	$stmt->close();
-	
-	
-	$conexion = conexion_bd();
+
+  //bans permanentes
 	$stmt = $conexion->prepare("SELECT * FROM bansperm WHERE id = ?");
 	$stmt->bind_param("s", $licencia);
 	$stmt->execute();
-	$checkbanp = $stmt->get_result();
-	$stmt->close();
-
+	$banssqlp = $stmt->get_result();
+	while($row = $banssqlp->fetch_assoc()) {
+	  $checkbanp[] = $row;
+  }
+  $stmt->close();
+  //check bans
 	if(count($checkbant)>0 || count($checkbanp)>0){
 		$baneado= true;
 	}else{
