@@ -22,19 +22,23 @@ if( !$_SESSION['lvRANGO'] >= 1){
 ?>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "GET"){
-	
-	if(isset($_GET["id"])){
-    $id = $_GET["id"];
-    $request = request_BD("DELETE FROM owned_vehicles WHERE id = '$id'");
-    $nombreadm = trim($_SESSION["Nombre"]);
-    $licencia = trim($_GET["licencia"]); 
-    $licencia = htmlspecialchars($licencia);
-    $license = trim($_SESSION["LICENCIA"]);
-	if(!testArray($licencia)){
-		echo (testArray($licencia));
-				die();
-	}
-    $request = request_BD("INSERT INTO panel_logusers (STAFF,TIPO,USER,LICENCIA,RAZON) VALUES ('$nombreadm','Eliminado un coche a un usuario','$licencia','$license','')");
+	if ($_SESSION['lvRANGO'] >= 7) {
+    # code...
+  
+    if(isset($_GET["id"])){
+      $id = $_GET["id"];
+      $request = request_BD("DELETE FROM owned_vehicles WHERE id = '$id'");
+      $nombreadm = trim($_SESSION["Nombre"]);
+      $licencia = trim($_GET["licencia"]); 
+      $licencia = htmlspecialchars($licencia);
+      $license = trim($_SESSION["LICENCIA"]);
+    if(!testArray($licencia)){
+      echo (testArray($licencia));
+          die();
+    }
+      $request = request_BD("INSERT INTO panel_logusers (STAFF,TIPO,USER,LICENCIA,RAZON) VALUES ('$nombreadm','Eliminado un coche a un usuario','$licencia','$license','')");
+    }
+
   }
 	$licencia = trim($_GET["licencia"]);
 	
@@ -80,9 +84,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 	$stmt->execute();
 	$checkbanp = $stmt->get_result();
 	$stmt->close();
-	
-	
-	
+
 	if(count($checkbant)>0 || count($checkbanp)>0){
 		$baneado= true;
 	}else{
