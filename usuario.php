@@ -95,239 +95,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
 }
 
-		
-
-
-	if($_SERVER["REQUEST_METHOD"] == "POST"){
-		
-	
-	
-	$licencia = trim($_GET["licencia"]);
-	$licencia = htmlspecialchars($licencia); 
-	
-	$checkbants = seleccionar_BD("SELECT * FROM bans WHERE id = '$licencia'");
-	
-	$checkbanps = seleccionar_BD("SELECT * FROM bansperm WHERE id = '$licencia'");
-	
-	$baneado = false;
-	$nombreadm = trim($_SESSION['Nombre']);
-	
-	if( $nombreadm == "Rocke" || $nombreadm == "VictorMinemu" || $nombreadm == "westones" ){
-		$whitelist = '';
-		
-		$SteamID = trim($_POST["SteamID"]);
-		if(isset($_POST['white']) && $whitelist==1) {   
-		$whitelist = trim($_POST["white"]);
-		$request = request_BD("INSERT INTO user_whitelist (identifier, whitelisted) VALUES ('$SteamID', '1')");
-		$request = request_BD("UPDATE `user_whitelist` SET whitelisted='1' WHERE identifier = '$SteamID'");
-		
-		}elseif(isset($_POST['white']) && $whitelist==0){
-			$whitelist = trim($_POST["white"]);
-			$request = request_BD("UPDATE `user_whitelist` SET whitelisted='0' WHERE identifier = '$SteamID'");
-		}
-		
-		
-		
-		
-	}
-	
-	
-	//echo'Lol'.$_POST["Ban"];
-	if(count($checkbants)>0 || count($checkbanps)>0){
-		$baneado= true;
-	}else{
-		$baneado = false;
-	}
-	//if ($baneado){echo $licencia."lol";}
-	
-	$lvrango = $_SESSION['lvRANGO'];
-	$dineronp = trim($_POST["DineroN"]);
-			$dinerobp = trim($_POST["DineroB"]);
-			$dineronegro = trim($_POST["DineroZ"]);
-			$trabajop = trim($_POST["Trabajo"]);
-			$trabajogp = trim($_POST["TrabajoG"]);
-			$SteamID = trim($_POST["SteamID"]);
-			$rangop = trim($_POST["Rango"]);
-			$razon = trim($_POST["Razon"]);
-			$comentario = trim($_POST["Comentarios"]);
-			$licencia = licencia($SteamID);
-			$nombreuser = usuario($SteamID);
-		if($lvrango >= 11){
-			
-			if(isset($_POST['ferrari'])) {   
-		
-			dar_coche($SteamID);
-		
-			}
-			
-			$request = request_BD("UPDATE `users` SET money='$dineronp' ,job='$trabajop' ,job_grade='$trabajogp' ,bank='$dinerobp' WHERE license = '$licencia'");
-			$request = request_BD("UPDATE `users` SET group='$rangop' WHERE license = '$licencia'");
-			$request = request_BD("UPDATE `user_accounts` SET money='$dineronegro' WHERE license = '$licencia'");
-		
-			
-			
-			
-			}
-		if ($lvrango == 2 ){
-			
-			
-			
-			if(!$baneado && ($_POST["Ban"] == "Baneado")) {
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, 0, 3, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if($baneado && ($_POST["Ban"] == "Desbaneado")){
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, 0, 5, $comentario);
-			}
-			if ($_POST["Ban"] == "BaneadoT"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, $horas, 2, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if ($_POST["Ban"] == "Kick"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 1, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-		}
-		
-		if ($lvrango == 3 ){
-			
-			
-			
-			if(!$baneado && ($_POST["Ban"] == "Baneado")) {
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, 0, 3, $comentario);
-				
-			}
-			if($baneado && ($_POST["Ban"] == "Desbaneado")){
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, 0, 5, $comentario);
-			}
-			if ($_POST["Ban"] == "BaneadoT"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 2, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if ($_POST["Ban"] == "Kick"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 1, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-		}
-		
-		
-		if ($lvrango == 4 ){
-			
-			
-			
-			if(!$baneado && ($_POST["Ban"] == "Baneado")) {
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, 0, 3, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if($baneado && ($_POST["Ban"] == "Desbaneado")){
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, 0, 5, $comentario);
-			}
-			if ($_POST["Ban"] == "BaneadoT"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 2, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if ($_POST["Ban"] == "Kick"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 1, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-		}
-		if ($lvrango == 5 ){
-			
-			
-			
-			if(!$baneado && ($_POST["Ban"] == "Baneado")) {
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, 0, 3, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if($baneado && ($_POST["Ban"] == "Desbaneado")){
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_pendiente($adm, $nombreuser, $SteamID, $razon, 0, 5, $comentario);
-			}
-			if ($_POST["Ban"] == "BaneadoT"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 2, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if ($_POST["Ban"] == "Kick"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 1, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			
-			$request = request_BD("UPDATE `users` SET job='$trabajop' ,job_grade='$trabajogp' WHERE license = '$licencia'");
-		}
-		if ($lvrango >= 6 ){
-			
-			
-			
-			if(!$baneado && ($_POST["Ban"] == "Baneado")) {
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, 0, 3, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if($baneado && ($_POST["Ban"] == "Desbaneado")){
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, 0, 5, $comentario);
-			}
-			if ($_POST["Ban"] == "BaneadoT"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 2, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			if ($_POST["Ban"] == "Kick"){
-				$horas = trim($_POST["HorasB"]);
-				$adm = $_SESSION['Nombre'];
-				$adm = preg_replace('/\s+/', '', $adm);
-				$request = añadir_aprobado($adm, $nombreuser, $SteamID, $razon, $horas, 1, $comentario);
-				$kick= rcon_kick($SteamID, $razon);
-			}
-			
-			$request = request_BD("UPDATE `users` SET job='$trabajop' ,job_grade='$trabajogp' WHERE license = '$licencia'");
-		}
-		
-
-	}
 
 ?>
 
@@ -952,7 +719,7 @@ $donador = "";
                   <th>Vehículo</th>
                   <th>Matrícula</th>
 
-            <?php if ($_SESSION['Nombre'] == "Rocke" || $_SESSION['Nombre'] == "Mark" || $_SESSION["Miguel"]){?>
+            <?php if ($_SESSION['Nombre'] == "Rocke" || $_SESSION['Nombre'] == "Mark" || $_SESSION['Nombre'] == "VictorMinemu"){?>
                   <th>Accion</th>
             <?php } ?>
                 </tr>
@@ -970,7 +737,7 @@ $donador = "";
 							echo '<tr>';
               echo '<td>'.$item['name'].'</td>';
               echo '<td>'.$data['plate'].'</td>';
-              if ($_SESSION['Nombre'] == "Rocke" || $_SESSION['Nombre'] == "Mark" || $_SESSION["Miguel"]){
+              if ($_SESSION['Nombre'] == "Rocke" || $_SESSION['Nombre'] == "Mark" || $_SESSION['Nombre'] == "VictorMinemu"){
                 echo '<td><a href=./usuario.php?licencia='.$Usuario["license"].'&id='.$item["id"].'>ELIMINAR</td>';
               }
 							echo '</tr>';
@@ -985,7 +752,7 @@ $donador = "";
                 <tr>
                   <th>Vehículo</th>
                   <th>Matrícula</th>
-                  <?php if ($_SESSION['Nombre'] == "Rocke" || $_SESSION['Nombre'] == "Mark" || $_SESSION["Miguel"]){?>
+                  <?php if ($_SESSION['Nombre'] == "Rocke" || $_SESSION['Nombre'] == "Mark" || $_SESSION['Nombre'] == "VictorMinemu"){?>
                   <th>Accion</th>
             <?php } ?>
                 </tr>
