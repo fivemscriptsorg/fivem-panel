@@ -98,7 +98,7 @@ if( $_SESSION['lvRANGO'] <= 2){
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3><?php  echo count(seleccionar_BD("SELECT 'name' FROM users WHERE isDonator > 0"));  ?></h3>
+              <h3><?php  echo count(seleccionar_BD("SELECT 'isDonator' FROM users WHERE isDonator > 0"));  ?></h3>
 
               <p>Usuarios VIP</p>
             </div>
