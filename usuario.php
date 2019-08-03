@@ -101,7 +101,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 <?php 
 $arr = [];
 	$conexion = conexion_bd();
-	$stmt = $conexion->prepare("SELECT * FROM users WHERE license = ?");
+	$stmt = $conexion->prepare("SELECT * FROM users WHERE license = ? LIMIT 1"); //PENDIENTE DE IMPLEMENTAR MÚLTIPLES PÁGINAS POR LICENCIA. 
 	$stmt->bind_param("s", $licencia);
 	$stmt->execute();
 	$resultados = $stmt->get_result();
@@ -109,7 +109,7 @@ $arr = [];
 	while($row = $resultados->fetch_assoc()) {
 	  $arr[] = $row;
 	}
-	if(!$arr) exit('No rows');
+	if(!$arr) exit('Error, contacta con el dueño.');
 	$stmt->close();
 ?>
 
