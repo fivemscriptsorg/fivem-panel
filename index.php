@@ -761,6 +761,14 @@ Highcharts.chart('container', {
 <script>
 $(document).ready(
             function() {
+		    $.ajax({
+  
+					url:"./funciones/tabala_general_tickets.php",  
+					method:"POST",  
+					success:function(data){  
+                     $('#tablaticketsg').html(data);  
+					}  
+				});  
            setInterval(function() {                  
 				$.ajax({
   
@@ -772,7 +780,7 @@ $(document).ready(
 				});  
 		
 	  
-				}, 30000);
+				}, 10000);
 			}
 	  );
 </script>
